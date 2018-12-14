@@ -1471,7 +1471,7 @@ void register_displaychangelistener(DisplayChangeListener *dcl)
 
     assert(!dcl->ds);
 
-    if (dcl->ops->dpy_gl_ctx_create) {
+    if (dcl->ops->dpy_gl_ctx_create || dcl->need_gl) {
         /* display has opengl support */
         assert(dcl->con);
         if (dcl->con->gl) {

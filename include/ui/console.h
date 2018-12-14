@@ -185,8 +185,10 @@ struct QemuDmaBuf {
     uint32_t  height;
     uint32_t  stride;
     uint32_t  fourcc;
+    uint64_t  mod;
     uint32_t  texture;
     bool      y0_top;
+    uint32_t  handle;
 };
 
 typedef struct DisplayChangeListenerOps {
@@ -248,7 +250,7 @@ struct DisplayChangeListener {
     const DisplayChangeListenerOps *ops;
     DisplayState *ds;
     QemuConsole *con;
-
+    bool need_gl; /* XXX hack */
     QLIST_ENTRY(DisplayChangeListener) next;
 };
 

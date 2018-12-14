@@ -1079,7 +1079,7 @@
 ##
 { 'enum'    : 'DisplayType',
   'data'    : [ 'default', 'none', 'gtk', 'sdl',
-                'egl-headless', 'curses', 'cocoa' ] }
+                'egl-headless', 'drm', 'curses', 'cocoa' ] }
 
 ##
 # @DisplayOptions:

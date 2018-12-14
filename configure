@@ -455,6 +455,7 @@ glusterfs_fallocate="no"
 glusterfs_zerofill="no"
 gtk=""
 gtk_gl="no"
+drm=""
 tls_priority="NORMAL"
 gnutls=""
 nettle=""
@@ -1358,6 +1359,10 @@ for opt do
   --disable-gtk) gtk="no"
   ;;
   --enable-gtk) gtk="yes"
+  ;;
+  --disable-drm) drm="no"
+  ;;
+  --enable-drm) drm="yes"
   ;;
   --tls-priority=*) tls_priority="$optarg"
   ;;
@@ -2703,6 +2708,10 @@ if test "$gtk" != "no"; then
     fi
 fi
 
+if test "$drm" != "no"; then
+        drm_cflags=$($pkg_config --cflags "libdrm")
+        drm_libs=$($pkg_config --libs "libdrm")
+fi
 
 ##########################################
 # GNUTLS probe
@@ -5991,6 +6000,7 @@ fi
 echo "SDL support       $sdl $(echo_version $sdl $sdlversion)"
 echo "GTK support       $gtk $(echo_version $gtk $gtk_version)"
 echo "GTK GL support    $gtk_gl"
+echo "DRM support       $drm"
 echo "VTE support       $vte $(echo_version $vte $vteversion)"
 echo "TLS priority      $tls_priority"
 echo "GNUTLS support    $gnutls"
@@ -6439,6 +6449,11 @@ if test "$gtk" = "yes" ; then
   if test "$gtk_gl" = "yes" ; then
     echo "CONFIG_GTK_GL=y" >> $config_host_mak
   fi
+fi
+if test "$drm" = "yes" ; then
+  echo "CONFIG_DRM=m" >> $config_host_mak
+  echo "DRM_CFLAGS=$drm_cflags" >> $config_host_mak
+  echo "DRM_LIBS=$drm_libs" >> $config_host_mak
 fi
 echo "CONFIG_TLS_PRIORITY=\"$tls_priority\"" >> $config_host_mak
 if test "$gnutls" = "yes" ; then
